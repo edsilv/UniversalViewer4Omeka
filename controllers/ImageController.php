@@ -250,16 +250,18 @@ class UniversalViewer_ImageController extends Omeka_Controller_AbstractActionCon
             $response->setHeader('Link', '<http://iiif.io/api/image/2/level2.json>;rel="profile"');
             $response->setHeader('Content-Type', $transform['format']['feature']);
 
-            $iClientCacheSecs = 200;
-            $iProxyCacheSecs = 600;
-            $dtNow = time();
-            $dtExpires = strtotime( sprintf( '+%s seconds', $iClientCacheSecs ));
-            $aHeaders = array();
-            $aHeaders[] = 'ETag: ' . md5($output);
-            $aHeaders[] = 'Expires: ' . date( 'r', $dtExpires );
-            $aHeaders[] = 'Last-Modified: ' . date( 'r', $dtNow );
-            $aHeaders[] = sprintf( 'Cache-Control: public, max-age=%s, s-maxage=%s', $iClientCacheSecs, $iProxyCacheSecs );
-            foreach( $aHeaders as $sHeader ) header( $sHeader );
+            // $iClientCacheSecs = 200;
+            // $iProxyCacheSecs = 600;
+            // $dtNow = time();
+            // $dtExpires = strtotime( sprintf( '+%s seconds', $iClientCacheSecs ));
+            // $aHeaders = array();
+            // //$aHeaders[] = 'ETag: ' . md5($output);
+            // $aHeaders[] = 'ETag: ' sprintf( '"%s-%s"', $last_modified, md5( $content ) );
+            // $aHeaders[] = 'Expires: ' . date( 'r', $dtExpires );
+            // $aHeaders[] = 'Last-Modified: ' . date( 'r', $dtNow );
+            // $aHeaders[] = sprintf( 'Cache-Control: public, max-age=%s, s-maxage=%s', $iClientCacheSecs, $iProxyCacheSecs );
+            // foreach( $aHeaders as $sHeader ) header( $sHeader );
+
             // echo( 'Now: ' . date( 'r', $dtNow ) . '<br />' );
             // foreach( $aHeaders as $sHeader ) echo( $sHeader . '<br />' );
             // echo( '<hr />' );
