@@ -252,7 +252,8 @@ class UniversalViewer_ImageController extends Omeka_Controller_AbstractActionCon
 
             $dtNow = time();
             $response->setHeader('ETag', $dtNow);
-            $response->setHeader('Last-Modified', $dtNow);
+            //$response->setHeader('Last-Modified', .gmdate("D, d M Y H:i:s", $dtNow)." GMT");
+            header("Last-Modified: Sat, 26 Jul 1997 05:00:00 GMT");
 
             $response->clearBody();
             $response->setBody($output);
