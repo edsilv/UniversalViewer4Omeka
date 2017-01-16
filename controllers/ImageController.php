@@ -250,12 +250,34 @@ class UniversalViewer_ImageController extends Omeka_Controller_AbstractActionCon
             $response->setHeader('Link', '<http://iiif.io/api/image/2/level2.json>;rel="profile"');
             $response->setHeader('Content-Type', $transform['format']['feature']);
 
+            $iClientCacheSecs = 20;
+            $iProxyCacheSecs = 60;
             $dtNow = time();
-            $etag = md5($output);
+            $dtExpires = strtotime( sprintf( '+%s seconds', $iClientCacheSecs ));
+            $aHeaders = array();
+            $aHeaders[] = 'ETag: ' . $dtNow;
+            $aHeaders[] = 'Expires: ' . date( 'r', $dtExpires );
+            $aHeaders[] = 'Last-Modified: ' . date( 'r', $dtNow );
+            $aHeaders[] = sprintf( 'Cache-Control: public, max-age=%s, s-maxage=%s',
+            $iClientCacheSecs, $iProxyCacheSecs );
+            foreach( $aHeaders as $sHeader ) header( $sHeader );
+            echo( 'Now: ' . date( 'r', $dtNow ) . '<br />' );
+            foreach( $aHeaders as $sHeader ) echo( $sHeader . '<br />' );
+            echo( '<hr />' );
+            foreach( $_SERVER as $sParam => $sValue ) {
+            if(( strpos( $sParam, 'HTTP_CF' )) !== false ) 
+                echo( $sParam . ': ' . $sValue . '<br />' );
+            if(( strpos( $sParam, 'HTTP_IF' )) !== false ) 
+                echo( $sParam . ': ' . $sValue . '<br />' );
+            }
+
+            // $dtExpires = strtotime( sprintf( '+%s seconds', $iClientCacheSecs ));
+            // $dtNow = time();
+            // $etag = md5($output);
             //$response->setHeader('ETag', $dtNow);
-            //$response->setHeader('Last-Modified', .gmdate("D, d M Y H:i:s", $dtNow)." GMT");
-            header("Last-Modified: ".gmdate("D, d M Y H:i:s", $dtNow)." GMT"); 
-            header("Etag: $etag");
+            // //$response->setHeader('Last-Modified', .gmdate("D, d M Y H:i:s", $dtNow)." GMT");
+            // header("Last-Modified: ".gmdate("D, d M Y H:i:s", $dtNow)." GMT"); 
+            // header("Etag: $etag");
 
             $response->clearBody();
             $response->setBody($output);
