@@ -251,7 +251,7 @@ class UniversalViewer_ImageController extends Omeka_Controller_AbstractActionCon
             $response->setHeader('Content-Type', $transform['format']['feature']);
 
             $dtNow = time();
-            $response->setHeader('ETag', '$dtNow');
+            $response->setHeader('ETag', "$dtNow");
 
             $response->clearBody();
             $response->setBody($output);
