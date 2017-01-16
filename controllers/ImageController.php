@@ -258,18 +258,17 @@ class UniversalViewer_ImageController extends Omeka_Controller_AbstractActionCon
             $aHeaders[] = 'ETag: ' . $dtNow;
             $aHeaders[] = 'Expires: ' . date( 'r', $dtExpires );
             $aHeaders[] = 'Last-Modified: ' . date( 'r', $dtNow );
-            $aHeaders[] = sprintf( 'Cache-Control: public, max-age=%s, s-maxage=%s',
-            $iClientCacheSecs, $iProxyCacheSecs );
+            $aHeaders[] = sprintf( 'Cache-Control: public, max-age=%s, s-maxage=%s', $iClientCacheSecs, $iProxyCacheSecs );
             foreach( $aHeaders as $sHeader ) header( $sHeader );
-            echo( 'Now: ' . date( 'r', $dtNow ) . '<br />' );
-            foreach( $aHeaders as $sHeader ) echo( $sHeader . '<br />' );
-            echo( '<hr />' );
-            foreach( $_SERVER as $sParam => $sValue ) {
-            if(( strpos( $sParam, 'HTTP_CF' )) !== false ) 
-                echo( $sParam . ': ' . $sValue . '<br />' );
-            if(( strpos( $sParam, 'HTTP_IF' )) !== false ) 
-                echo( $sParam . ': ' . $sValue . '<br />' );
-            }
+            // echo( 'Now: ' . date( 'r', $dtNow ) . '<br />' );
+            // foreach( $aHeaders as $sHeader ) echo( $sHeader . '<br />' );
+            // echo( '<hr />' );
+            // foreach( $_SERVER as $sParam => $sValue ) {
+            // if(( strpos( $sParam, 'HTTP_CF' )) !== false ) 
+            //     echo( $sParam . ': ' . $sValue . '<br />' );
+            // if(( strpos( $sParam, 'HTTP_IF' )) !== false ) 
+            //     echo( $sParam . ': ' . $sValue . '<br />' );
+            // }
 
             // $dtExpires = strtotime( sprintf( '+%s seconds', $iClientCacheSecs ));
             // $dtNow = time();
