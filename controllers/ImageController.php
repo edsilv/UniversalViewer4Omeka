@@ -250,12 +250,12 @@ class UniversalViewer_ImageController extends Omeka_Controller_AbstractActionCon
             $response->setHeader('Link', '<http://iiif.io/api/image/2/level2.json>;rel="profile"');
             $response->setHeader('Content-Type', $transform['format']['feature']);
 
-            $iClientCacheSecs = 20;
-            $iProxyCacheSecs = 60;
+            $iClientCacheSecs = 200;
+            $iProxyCacheSecs = 600;
             $dtNow = time();
             $dtExpires = strtotime( sprintf( '+%s seconds', $iClientCacheSecs ));
             $aHeaders = array();
-            $aHeaders[] = 'ETag: ' . $dtNow;
+            $aHeaders[] = 'ETag: ' . md5($output);
             $aHeaders[] = 'Expires: ' . date( 'r', $dtExpires );
             $aHeaders[] = 'Last-Modified: ' . date( 'r', $dtNow );
             $aHeaders[] = sprintf( 'Cache-Control: public, max-age=%s, s-maxage=%s', $iClientCacheSecs, $iProxyCacheSecs );
